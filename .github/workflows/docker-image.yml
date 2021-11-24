@@ -20,14 +20,14 @@ jobs:
        name: inhamysnyk/github
        username: ${{ secrets.DOCKER_HUB_USER }}
        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-       dockerfile path: ./app/Dockerfile
+       dockerfile path: /github/workspace/app/Dockerfile
 
     - name: Build and push
       id: docker_build
       uses: docker/build-push-action@v2
       with:
           context: ./
-          file: ./app/Dockerfile
+          file: /github/workspace/app/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:latest
