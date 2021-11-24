@@ -1,0 +1,21 @@
+name: 'Ansible'
+
+on:
+
+jobs:
+
+   - id: host
+     env:
+          SSH: ${{ secrets.SSH_PRIVATE_KEY }}
+     run: |
+            echo $host >> ansible/hosts
+            echo "$SSH" > ansible/lesson9.pem
+            chmod 400 ansible/lesson9.pem
+            cat ansible/lesson9.pem
+            
+   - name: Ansible
+     uses: saubermacherag/ansible-playbook-docker-action@v1.3
+     with:
+          playbookName: 'ansible/deploy.yml'
+          inventoryFile: 'ansible/hosts'
+          keyFile: 'ansible/lesson9.pem'
