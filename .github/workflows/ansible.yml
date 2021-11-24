@@ -1,21 +1,20 @@
 name: 'Ansible'
 
 on:
+  push:
 
 jobs:
 
-   - id: host
-     env:
-          SSH: ${{ secrets.SSH_PRIVATE_KEY }}
-     run: |
-            echo $host >> ansible/hosts
-            echo "$SSH" > ansible/lesson9.pem
-            chmod 400 ansible/lesson9.pem
-            cat ansible/lesson9.pem
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
             
-   - name: Ansible
-     uses: saubermacherag/ansible-playbook-docker-action@v1.3
-     with:
+    - name: Ansible
+      uses: saubermacherag/ansible-playbook-docker-action@v1.3
+      with:
           playbookName: 'ansible/deploy.yml'
           inventoryFile: 'ansible/hosts'
           keyFile: 'ansible/lesson9.pem'
